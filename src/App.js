@@ -72,7 +72,7 @@ const App = () => {
           <span>Download</span>
         </button>
 
-        {error && <p className="text-red-500 my-2">{error}</p>}
+        <p className={`text-red-500 my-2 ${error ? "opacity-100" :"opacity-0"}`}>{error}</p>
 
         <div className="video-container my-3">
           {data && (
