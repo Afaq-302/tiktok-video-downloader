@@ -41,7 +41,7 @@ const App = () => {
   };
 
   return (
-    <div className="relative h-screen w-screen">
+    <div className="relative h-screen w-screen 0">
       <video
         autoPlay
         muted
@@ -61,7 +61,7 @@ const App = () => {
         <input
           type="text"
           placeholder="Enter Tiktok URL"
-          className="my-4 px-2 py-2 rounded-lg text-gray-600 w-[30%] focus:outline-none text-[16px]"
+          className="my-4 px-2 py-2 rounded-lg text-gray-600 w-[30%] focus:outline-none text-[16px] sm:w-[60%]"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={(e) => handleKeyPress(e)}
