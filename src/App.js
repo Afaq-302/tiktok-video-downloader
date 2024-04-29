@@ -1,8 +1,6 @@
 import "./App.css";
 import React, { useState } from "react";
-import axios from "axios";
 import tiktokVideoDownloader from "./api";
-import DownloadButton from "./DownloadButton";
 
 const App = () => {
   const [url, setUrl] = useState("");
