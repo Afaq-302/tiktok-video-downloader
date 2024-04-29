@@ -9,7 +9,6 @@ const App = () => {
   const [error, setError] = useState("");
 
   const handleClick = async () => {
-
     if (url === "") {
       setError("Please insert a URL");
       setTimeout(function () {
@@ -66,7 +65,6 @@ const App = () => {
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={(e) => handleKeyPress(e)}
         />
-
         <button
           onClick={handleClick}
           className="bg-blue-500 text-white rounded-lg px-6 py-2 text-[14px] hover:bg-blue-600"
