@@ -2,12 +2,13 @@ import "./App.css";
 import React, { useState } from "react";
 import axios from "axios";
 import tiktokVideoDownloader from "./api";
+import DownloadButton from "./DownloadButton";
 
 const App = () => {
   const [url, setUrl] = useState("");
   const [data, setData] = useState("");
   const [error, setError] = useState("");
-
+  const [loading, setLoading] = useState(false); // Add this line
   const handleClick = async () => {
     if (url === "") {
       setError("Please insert a URL");
@@ -22,14 +23,28 @@ const App = () => {
     }
 
     if (url !== "" && url.includes("tiktok.com")) {
+      setLoading(true); // Set loading to true when the download starts
       try {
         const response = await tiktokVideoDownloader(url);
         console.log("response", response.data.data);
         setData(response.data.data);
+
+        if (response.data.data.play) {
+          const res = await fetch(response.data.data.play);
+          const blob = await res.blob();
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "video.mp4");
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
       } catch (error) {
         console.log(error);
         setError("Something went wrong");
       }
+      setLoading(false); // Set loading to false when the download ends
     }
   };
 
@@ -66,13 +81,18 @@ const App = () => {
           onKeyDown={(e) => handleKeyPress(e)}
         />
         <button
-          onClick={handleClick}
-          className="bg-blue-500 text-white rounded-lg px-6 py-2 text-[14px] hover:bg-blue-600"
-        >
-          <span>Download</span>
-        </button>
+        onClick={handleClick}
+        className="bg-blue-500 text-white rounded-lg px-6 py-2 text-[14px] hover:bg-blue-600"
+        disabled={loading} 
+      >
+        {loading ? 'Loading...' : 'Download'} 
+      </button>
 
-        <p className={`text-red-500 my-2 ${error ? "opacity-100" :"opacity-0"}`}>{error}</p>
+        <p
+          className={`text-red-500 my-2 ${error ? "opacity-100" : "opacity-0"}`}
+        >
+          {error}
+        </p>
 
         <div className="video-container my-3">
           {data && (
